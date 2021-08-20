@@ -212,5 +212,8 @@ Hard resetting via RTS pin...
   paint.SetRotate(3);
   ```
   这是可以让屏幕旋转90°的函数, 并让坐标原点函数也会相应跟着旋转, 下面是图像方向与坐标原点之间的关系
+  - paint.SetRotate(0);
+  
+  ![pic0](./docs/100.png)
 
 </details>
