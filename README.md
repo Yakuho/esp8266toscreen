@@ -375,7 +375,34 @@ Hard resetting via RTS pin...
 <summary>使用图片输出到屏幕上</summary>
   
   1. 使用tools里面的Python代码将图像转模
+  ```python
+  # path: 图片相对路径
+  # rotage: 按照上面所介绍的, 图像想要在哪个角度
+  if __name__ == "__main__":
+    convert(path='demo.png', rotage=3)
+  ```
+  
   2. 将生成代码复制到imagedata.cpp
+  ```
+  #include "imagedata.h"
+  #include <avr/pgmspace.h>
+
+
+  unsigned char IMAGE_DATA[] PROGMEM = {
+  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+  ......
+  0xff, 0xff, 0xff, 0xff, };
+  ```
+  
   3. 在Arduino IDE上传代码 输出图像
+  ```c
+  void setup()  // 此区域代码硬件只执行一次
+  {
+    Serial.begin(115200);
+    epd.Clear();
+    epd.Init(FULL);
+    epd.Display(IMAGE_DATA);
+  }
+  ```
   
 </details>
