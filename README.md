@@ -374,6 +374,8 @@ Hard resetting via RTS pin...
 <details>
 <summary>使用图片输出到屏幕上</summary>
   
-  
+  1. 使用tools里面的Python代码将图像转模
+  2. 将生成代码复制到imagedata.cpp
+  3. 在Arduino IDE上传代码 输出图像
   
 </details>
