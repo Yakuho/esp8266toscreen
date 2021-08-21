@@ -210,7 +210,7 @@ Hard resetting via RTS pin...
   
 # 更多函数详细介绍
 <details>
-<summary>屏幕的输出方向</summary>
+<summary>1. 屏幕的输出方向</summary>
 
   不知道你是否注意到在 "Hello world" 代码中, 设置了一个屏幕方向代码如: 
   ```c
@@ -249,7 +249,130 @@ Hard resetting via RTS pin...
 </details>
 
 <details>
-<summary>屏幕的输出颜色以及像素组成</summary>
+<summary>2. 屏幕的输出颜色以及像素组成</summary>
+  
+  本项目使用的2.13寸墨水屏中, 该墨水屏的像素矩阵大小为(212, 104), 控制屏幕输出, 有两种不同的输出代码: 
+  
+  <details>
+  <summary>基于epd函数的输出</summary>
+  
+  ```c
+  void setup()
+  {
+    Serial.begin(115200);
+    epd.Clear();
+    epd.Init(FULL);
+    int all_pixel = 104 * 212 / 8;      // 定义画布大小
+    unsigned char image[all_pixel];     // 定义画布矩阵
+    for (int i = 0; i < all_pixel; i++) {
+      image[i] = 0x00;       // 将画布置为全黑
+    }
+    /*
+      这里可能会有疑惑为什么画布大小明明是 212 * 104 为什么还要除8
+      注意看下面的数组赋值, 每个数组赋值是0x00, 表示一个数组元素是一个字节
+      即包含8比特的值, 正如所说的屏幕像素是由比特位决定的, 所以只需要 212 * 104 / 8
+    */
+    Paint paint(image, 104, 212);
+    epd.Display(paint.GetImage());
+  }
+  ```
+                            
+  </details>
+    
+    
+  <details>
+  <summary>基于paint函数的输出</summary>
+                              
+  ```c
+  void setup()
+  {
+    Serial.begin(115200);
+    epd.Clear();
+    epd.Init(FULL);
+    int all_pixel = 104 * 212 / 8;      // 定义画布大小
+    unsigned char image[all_pixel];     // 定义画布矩阵
+    for (int i = 0; i < all_pixel; i++) {
+      image[i] = 0x00;       // 将画布置为全黑
+    }
+    /*
+      在这里仍然需要使用比特形式初始化画布
+      但是初始化以后, 就可以使用paint去进行坐标点的绘图
+      这时的坐标点就是 212 * 104
+    */
+    Paint paint(image, 104, 212);
+    for (int x = 0; x < 212; x++){
+      for (int y = 0; y < 104; y++){
+        paint.DrawPixel(x, y, 1);  // 逐个坐标进行显示
+      }
+    }
+    epd.Display(paint.GetImage());
+  }
+  ```
+                              
+  </details>
+  
+  微雪的24排线的墨水屏是有黑白红三种颜色的输出, 不用模式下的显示, 代码上也会有稍微的不同, 其中红色显示的比较特殊, 下面有两种模式的Demo代码:
+  
+  <details>
+  <summary>黑白输出模式</summary>
+  
+  ```c
+  void setup()
+  {
+    Serial.begin(115200);
+    epd.Clear();
+    epd.Init(FULL);
+    int all_pixel = 104 * 212 / 8;      // 定义画布大小
+    unsigned char image[all_pixel];     // 定义画布矩阵
+    for (int i = 0; i < all_pixel; i++) {
+      image[i] = 0x00;       // 将画布置为全黑
+    }
+    Paint paint(image, 104, 212);
+    paint.SetRotate(3);
+    paint.DrawFilledCircle(50, 50, 10, 1);  // 画一个白色实心圆
+    epd.Display(paint.GetImage());
+  }
+  ```
+  
+  </details>
+    
+  <details>
+  <summary>红色输出模式</summary>
+  
+  红色模式输出比较特殊, 必须先黑白输出模式, 然后将原来白色转红色, 原来黑色转白色
+  ```c
+  void setup()
+  {
+    Serial.begin(115200);
+    epd.Clear();
+    epd.Init(FULL);
+    int all_pixel = 104 * 212 / 8;      // 定义画布大小
+    unsigned char image[all_pixel];     // 定义画布矩阵
+    for (int i = 0; i < all_pixel; i++) {
+      image[i] = 0x00;       // 将画布置为全黑
+    }
+    Paint paint(image, 104, 212);
+    paint.SetRotate(3);
+    paint.DrawFilledCircle(30, 50, 10, 0);  // 画一个黑色实心圆
+    paint.DrawFilledCircle(50, 50, 10, 1);  // 画一个白色实心圆
+    epd.Display(paint.GetImage());      // 先黑白模式输出
+    epd.Display_red(paint.GetImage());  // 再红色模式输出
+    epd.show();                         // 必须show一次
+    /*
+      最后的效果是底色是白色, 实心圆变成了红色
+      关于更多红色的还得深入探究才知道...
+    */
+  }
+  ```
+  
+  </details>
+  
+</details>
+    
+# 更多玩法
+
+<details>
+<summary>使用图片输出到屏幕上</summary>
   
   
   
