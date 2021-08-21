@@ -3,13 +3,18 @@
 # 目录简介
 
 <details>
-<summary>source: 源代码文件分布</summary>
+<summary>source: 源代码文件</summary>
 
 - font(8,12,16,20,24): 字体格式文件;数字代表字体大小
 - epdpaint: 画布文件;矩形、线段、圆等绘图函数
 - epdif: 引脚定义
 - imagedata: 存放图片矩阵
 - epd2in13_V2: 控制命令
+  
+</details>
+
+<details>
+<summary>docs: 文档图片文件</summary>
   
 </details>
 
@@ -212,8 +217,33 @@ Hard resetting via RTS pin...
   paint.SetRotate(3);
   ```
   这是可以让屏幕旋转90°的函数, 并让坐标原点函数也会相应跟着旋转, 下面是图像方向与坐标原点之间的关系
-  - paint.SetRotate(0);
+  
+  <details>
+  <summary>paint.SetRotate(0)</summary>
   
   ![pic0](./docs/100.png)
+    
+  </details>
+  
+  <details>
+  <summary>paint.SetRotate(1)</summary>
+  
+  ![pic0](./docs/101.png)
+    
+  </details>
+  
+  <details>
+  <summary>paint.SetRotate(2)</summary>
+  
+  ![pic0](./docs/102.png)
+    
+  </details>
+  
+  <details>
+  <summary>paint.SetRotate(3)</summary>
+  
+  ![pic0](./docs/103.png)
+    
+  </details>
 
 </details>
