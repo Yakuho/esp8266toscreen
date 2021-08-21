@@ -247,3 +247,10 @@ Hard resetting via RTS pin...
   </details>
 
 </details>
+
+<details>
+<summary>屏幕的输出颜色以及像素组成</summary>
+  
+  
+  
+</details>
