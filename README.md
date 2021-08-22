@@ -208,7 +208,7 @@ Hard resetting via RTS pin...
 
 6. 若发现屏幕闪烁并输出 "Hello world", 说明你成功入门了 (●'◡'●)
   
-# 更多函数详细介绍
+# 更多详细介绍
 <details>
 <summary>1. 屏幕的输出方向</summary>
 
@@ -374,10 +374,12 @@ Hard resetting via RTS pin...
 <details>
 <summary>使用图片输出到屏幕上</summary>
   
-  1. 使用tools里面的Python代码将图像转模
+  1. 设计图片(像素尺寸212, 104), 设置想要横向还是纵向显示
+  
+  1. 使用tools里面的Python代码将图像转模 ()
   ```python
   # path: 图片相对路径
-  # rotage: 按照上面所介绍的, 图像想要在哪个角度
+  # rotage: 当前图片是设计在哪个角度显示的 (角度可参考上面 更多详细介绍 -> 1. 屏幕的输出方向)
   if __name__ == "__main__":
     convert(path='demo.png', rotage=3)
   ```
@@ -405,5 +407,9 @@ Hard resetting via RTS pin...
     epd.Sleep();
   }
   ```
+  
+  4. 输出效果
+  
+  ![demo1](./docs/demo1.jpg)
   
 </details>
