@@ -402,6 +402,7 @@ Hard resetting via RTS pin...
     epd.Clear();
     epd.Init(FULL);
     epd.Display(IMAGE_DATA);
+    epd.Sleep();
   }
   ```
   
